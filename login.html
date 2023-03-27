@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Login Page</h1>
+        <input type="text" id="email" placeholder="Enter your email"><br><br>
+        <input type="password" id="pass" placeholder="Enter your password" ><br><br>
+        <button onClick="onlogin()">Log In</button>
+    </div>
+</body>
+<script>
+    const onlogin=()=>{
+        const payload={
+            email:document.getElementById("email").value,
+            pass:document.getElementById("pass").value
+        }
+        // console.log(payload)
+        fetch("http://localhost:8000/users/login",{
+            method:"POST",
+            headers:{
+                "Content-type":"application/json"
+            },
+            body: JSON.stringify(payload)
+        }).then(res=>res.json())
+        .then(res=>{
+            console.log(res)
+            localStorage.setItem("token",res.token)
+        })
+        .catch((err)=>console.log(err))
+    }
+</script>
+</html>
